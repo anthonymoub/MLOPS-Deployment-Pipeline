@@ -2,7 +2,14 @@ import logging
 from typing import Tuple
 import pandas as pd
 from zenml import step
+from src.model_dev import LinearRegressionModel
+from sklearn.base import RegressorMixin
 
 @step
-def train_model(df: pd.DataFrame) -> None:
+def train_model(X_train: pd.DataFrame,
+                X_test: pd.DataFrame,
+                y_train: pd.DataFrame,
+                y_test: pd.DataFrame) -> RegressorMixin:
+    '''Trains model on ingested data'''
+    
     pass
