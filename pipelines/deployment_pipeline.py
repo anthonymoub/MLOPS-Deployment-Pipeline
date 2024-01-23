@@ -32,6 +32,29 @@ def deployment_trigger(
 
     return accuracy > config.min_accuracy
 
+
+class MLFlowDeploymentLoaderStepParameters(BaseParameters):
+    """MLflow deployment getter parameters
+
+    Attributes:
+        pipeline_name: name of the pipeline that deployed the MLflow prediction
+            server
+        step_name: the name of the step that deployed the MLflow prediction
+            server
+        running: when this flag is set, the step only returns a running service
+        model_name: the name of the model that is deployed
+    """
+
+    pipeline_name: str
+    step_name: str
+    running: bool = True
+
+
+
+
+
+
+
 @pipeline(enable_cache=False, settings={"docker": docker_settings})
 def continuous_deployment_pipeline(
     data_path: str,
