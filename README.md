@@ -19,7 +19,8 @@ The diagram above illustrates the workflow of the whole pipeline. It begins with
 
 The deployment pipeline has been implemented into a Streamlit app, where you can to observe its functionality in the video belo:
 
-[![Alt text for image](https://github.com/anthonymoub/MLOPS-Deployment-Pipeline/assets/112438562/e859ae46-72e1-4dcc-adb1-0d521fed4a71)](https://www.youtube.com/watch?v=ycbsLh6IHOQ "Title of video")
+<a href="https://www.youtube.com/watch?v=ycbsLh6IHOQ" title="Title of video" target="_blank"><img src="https://github.com/anthonymoub/MLOPS-Deployment-Pipeline/assets/112438562/e859ae46-72e1-4dcc-adb1-0d521fed4a71" alt="Alt text for image"></a>
+
 
 
 
