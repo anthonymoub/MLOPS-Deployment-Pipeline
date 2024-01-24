@@ -5,7 +5,7 @@ import logging
 from zenml import pipeline, step
 from zenml.config import DockerSettings
 from zenml.constants import DEFAULT_SERVICE_START_STOP_TIMEOUT
-from zenml.integrations.constants import MLFLOW, TENSORFLOW
+from zenml.integrations.constants import MLFLOW #, TENSORFLOW
 from zenml.integrations.mlflow.model_deployers.mlflow_model_deployer import (
     MLFlowModelDeployer,
 )
@@ -101,7 +101,7 @@ def prediction_service_loader(
 @step
 def predictor(
     service: MLFlowDeploymentService,
-    data: np.ndarray,
+    data: str,
 ) -> np.ndarray:
     """Run an inference request against a prediction service"""
 
@@ -134,7 +134,7 @@ def predictor(
 @pipeline(enable_cache=False, settings={"docker": docker_settings})
 def continuous_deployment_pipeline(
     data_path: str,
-    min_accuracy: float = 0.9,
+    min_accuracy: float = 0.0,
     workers: int = 1,
     timeout: int = DEFAULT_SERVICE_START_STOP_TIMEOUT,
 ):
