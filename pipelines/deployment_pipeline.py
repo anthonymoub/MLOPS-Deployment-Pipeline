@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import json
+import logging
 from zenml import pipeline, step
 from zenml.config import DockerSettings
 from zenml.constants import DEFAULT_SERVICE_START_STOP_TIMEOUT
@@ -14,21 +16,22 @@ from steps.clean_data import clean_df
 from steps.evaluation import evaluate_model
 from steps.ingest_data import ingest_df
 from steps.model_train import train_model
-
 from .utils import get_data_for_test
 
 docker_settings = DockerSettings(required_integrations = [MLFLOW])
 
-class DeploymentTriggerConfig(BaseParameters):
-    """Parameters that are used to trigger the deployment"""
-
-    min_accuracy: float = 0.9
-
 @step(enable_cache=False)
 def dynamic_importer() -> str:
     """Downloads the latest data from a mock API."""
+    logging.info("Starting to download data...")
     data = get_data_for_test()
+    logging.info("Data downloaded successfully.")
     return data
+
+class DeploymentTriggerConfig(BaseParameters):
+    """Parameters that are used to trigger the deployment"""
+
+    min_accuracy: float = 0
 
 @step
 def deployment_trigger(
@@ -136,6 +139,7 @@ def continuous_deployment_pipeline(
     timeout: int = DEFAULT_SERVICE_START_STOP_TIMEOUT,
 ):
     # Link all the steps artifacts together
+    logging.info("Ingesting data")
     df = ingest_df(data_path = data_path)
     x_train, x_test, y_train, y_test = clean_df(df)
     model = train_model(x_train, x_test, y_train, y_test)
@@ -151,3 +155,14 @@ def continuous_deployment_pipeline(
         workers=workers,
         timeout=timeout,
     )
+
+@pipeline(enable_cache=False, settings={"docker": docker_settings})
+def inference_pipeline(pipeline_name: str, pipeline_step_name: str):
+    # Link all the steps artifacts together
+    batch_data = dynamic_importer()
+    model_deployment_service = prediction_service_loader(
+        pipeline_name=pipeline_name,
+        pipeline_step_name=pipeline_step_name,
+        running=False,
+    )
+    predictor(service=model_deployment_service, data=batch_data)
