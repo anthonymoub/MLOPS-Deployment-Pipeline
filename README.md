@@ -21,6 +21,33 @@ The deployment pipeline has been implemented into a Streamlit app, where you can
 
 <a href="https://www.youtube.com/watch?v=ycbsLh6IHOQ" title="Title of video" target="_blank"><img src="https://github.com/anthonymoub/MLOPS-Deployment-Pipeline/assets/112438562/e859ae46-72e1-4dcc-adb1-0d521fed4a71" alt="Alt text for image"></a>
 
+**Repository Strucutre**
+
+This repository is organized as follows (below are the main files/fodlers):
+
+- `pipelines`: Contains Python scripts defining the pipelines for data processing, training, and deployment.
+
+- `run_deployment.py`: A Python script that handles the deployment of the machine learning model.
+
+- `run_pipeline.py`: A script to run the defined pipelines, such as training/evaluation pipelines.
+
+- `src`: Source directory containing the main code for the project.
+
+  - `data_cleaning.py`: Script for cleaning or preprocessing the data.
+  - `evaluation.py`: Contains functions or classes to evaluate the machine learning model.
+  - `model_dev.py`: Development of the machine learning model.
+
+- `steps`: This directory may contain individual steps or components used in pipelines.
+
+  - `clean_data.py`: Step for cleaning the data.
+  - `config.py`: Configuration settings for the steps.
+  - `evaluation.py`: Step for evaluating the model.
+  - `ingest_data.py`: Step for ingesting or loading data.
+  - `model_train.py`: Step for training the model.
+
+**Credits**
+
+This project is based on the following course/tutorial: https://www.youtube.com/watch?v=-dJPoLm_gtE
 
 
 
